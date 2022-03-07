@@ -15,4 +15,5 @@ export interface ItableItem {
   uploadType: EuploadType
   fileHandle: EuploadHandle
   progress: number
+  itemFile: any
 }

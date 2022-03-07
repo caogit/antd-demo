@@ -1,6 +1,6 @@
 <template>
   <basicModalVue ref="basicModalRef">
-    <div>
+    <a-space>
       <a-button type="primary" @click="closeModal">从内部关闭弹窗</a-button>
       <a-button type="primary" @click="changeModal(changeProp)"
         >从内部修改值</a-button
@@ -8,7 +8,7 @@
       <a-button type="ghost" @click="handleConfirm"
         >测试内部确定的回调事件</a-button
       >
-    </div>
+    </a-space>
   </basicModalVue>
 </template>
 

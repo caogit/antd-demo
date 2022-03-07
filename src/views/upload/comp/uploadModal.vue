@@ -56,22 +56,26 @@ const defaultFileListRef = ref<ItableItem>({
   fileSize: '',
   uploadType: EuploadType.EMPYT,
   fileHandle: EuploadHandle.DELETE,
-  progress: 0
+  progress: 0,
+  itemFile: {}
 })
 //处理过后的item数组对象
 const fileListRef = ref<ItableItem[]>([])
-//保存的formData对象数组
-const beforeFormData = ref<any[]>([])
 
 const beforeUpload = (file: any, fileList: any) => {
-  beforeFormData.value.push(file)
   const { name: fileName, size: fileSize } = file
   // 生成缩略图
   getBase64WithFile(file).then(({ result: thumbnail }) => {
     // 合并两个对象，后面的对象会和前面的对象(之前存在的)合并，并替换掉默认属性
     fileListRef.value = [
       ...unref(fileListRef),
-      { ...defaultFileListRef.value, fileName, fileSize, thumbnail }
+      {
+        ...defaultFileListRef.value,
+        itemFile: file,
+        fileName,
+        fileSize,
+        thumbnail
+      }
     ]
   })
 }
@@ -85,8 +89,13 @@ function handleType(type: EuploadType) {
 // 点击开始上传
 const statrUpload = () => {
   const formData = new FormData()
-  beforeFormData.value.forEach((item) => {
-    formData.append('file', item)
+
+  const notSuccessList = fileListRef.value.filter(
+    (item) => item.uploadType === EuploadType.EMPYT
+  )
+
+  notSuccessList.forEach((item) => {
+    formData.append('file', item.itemFile)
   })
 
   // 设置状态为上传中,loading为true

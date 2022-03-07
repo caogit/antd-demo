@@ -1,4 +1,7 @@
 <template>
+  <h2>
+    以下是 useModal 方式，其实也可以使用，ref方式如：modalRef.value.closeModal()
+  </h2>
   <div>
     <div>1. 内部关闭和内部修改</div>
     <a-button type="primary" @click="open1">Open Modal</a-button>

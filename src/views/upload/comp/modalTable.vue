@@ -1,10 +1,5 @@
 <template>
-  <a-table
-    :rowKey="(record:any, index:any) => index"
-    bordered
-    :data-source="fileListData"
-    :columns="columns"
-  >
+  <a-table bordered :data-source="fileListData" :columns="columns">
     <template #bodyCell="{ text, record, column }">
       <template v-if="column.key === '1'">
         <img style="width: 100px; height: 100px" :src="text" alt="" />
@@ -12,6 +7,7 @@
       <template v-if="column.key === '2'">
         <span>{{ text }}</span>
         <a-progress
+          ref="progressRef"
           :percent="record.progress"
           :status="changeProgressStatus(record.uploadType)"
         />
@@ -104,12 +100,13 @@ function getUploadText(type: EuploadType) {
   return state
 }
 // 改变进度条的状态
+const progressRef = ref()
 function changeProgressStatus(type: EuploadType) {
   let state = ''
   switch (type) {
     case EuploadType.SUCCESS:
-      state = ''
-      break
+      delete progressRef.value.status
+      return
     case EuploadType.UPLOADING:
       state = 'active'
       break

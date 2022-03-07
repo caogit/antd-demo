@@ -31,6 +31,11 @@ const routes: Array<RouteRecordRaw> = [
         meta: { text: '弹窗组件' }
       },
       {
+        path: 'modal',
+        component: () => import('@/views/modal/index.vue'),
+        meta: { text: '弹窗组件' }
+      },
+      {
         path: 'testPage',
         component: () => import('@/views/testPage/father.vue'),
         meta: { text: 'test' }
