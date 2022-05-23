@@ -1,3 +1,9 @@
+/*
+ * @Description: 😎在这里写你的描述
+ * @Autor: 曹老板
+ * @Date: 2022-03-14 08:48:59
+ * @LastEditTime: 2022-04-20 11:35:40
+ */
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 
 const routes: Array<RouteRecordRaw> = [
@@ -38,12 +44,23 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'testPage',
         component: () => import('@/views/testPage/father.vue'),
-        meta: { text: 'test' }
+        meta: { text: '测试组件传值' }
       },
       {
         path: 'demo',
         component: () => import('@/views/demo/index.vue'),
-        meta: { text: 'demo' }
+        meta: { text: '下载文件' },
+        alias: ['/copydem']
+      },
+      {
+        path: 'richTextEditor',
+        component: () => import('@/views/richTextEditor/index.vue'),
+        meta: { text: '虚拟滚动' }
+      },
+      {
+        path: 'uploadFile',
+        component: () => import('@/views/uploadFile/index.vue'),
+        meta: { text: '文件上传多种方式' }
       }
     ]
   }

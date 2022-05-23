@@ -1,5 +1,5 @@
 <template>
-  <basicModalVue ref="basicModalRef">
+  <basicModalVue ref="basicModalRef" v-bind="$attrs">
     <a-space>
       <a-button type="primary" @click="closeModal">从内部关闭弹窗</a-button>
       <a-button type="primary" @click="changeModal(changeProp)"

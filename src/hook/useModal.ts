@@ -14,9 +14,7 @@ const dataTransfer = reactive<any>({})
 
 type TCallbackConfirmFn = () => void
 
-interface Fn<T = any, R = T> {
-  (...arg: T[]): R
-}
+type Fn = (T: any) => void
 
 //用于独立的 Modal 内部调用（在我的基座Modal基础上在封装一个组件，在那个组件中使用的hook）
 
@@ -58,6 +56,7 @@ export function useModalInner(
 export function useModal() {
   // 定义一个modal用于接收基座对话框的方法
   const modal = ref()
+  console.log('🤡 ~~ modal', modal)
 
   // 点击open方法的时候，触发返回一个方法实例
   const getInstance = () => {

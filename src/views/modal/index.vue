@@ -1,15 +1,17 @@
 <template>
-  <h2>
-    以下是 useModal 方式，其实也可以使用，ref方式如：modalRef.value.closeModal()
-  </h2>
   <div>
+    <h2>
+      以下是 useModal
+      方式，其实也可以使用，ref方式如：modalRef.value.closeModal()
+    </h2>
     <div>1. 内部关闭和内部修改</div>
     <a-button type="primary" @click="open1">Open Modal</a-button>
     <div>2. 外部传值内部</div>
     <a-button type="primary" @click="send">Open Modal</a-button>
   </div>
   <!-- 这里的register直接就到了孙子组件basicModal中去触发，没有经过子组件Modal1 -->
-  <Modal1 @register="register1"></Modal1>
+  <!-- 是因为我们的Moda1是只有一个根节点组件，会直接透传过去，神奇！！ -->
+  <Modal1 :title="'地方'" @register="register1"></Modal1>
   <Modal2 @register="register2"></Modal2>
 </template>
 <script lang="ts" setup>
@@ -25,6 +27,7 @@ const send = () => {
   })
 }
 // 这里的主要思想就是一个组件相当于创建了一个hook，你点击了那个方法，就调哪个方法里面的hook
+
 const { register: register1, open: open1 } = useModal()
 const { register: register2, open: open2 } = useModal()
 </script>
