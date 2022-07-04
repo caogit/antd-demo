@@ -13,28 +13,47 @@
     <a-layout>
       <headers v-model:collapsed="collapsed"></headers>
       <a-layout-content class="content-style">
-        <router-view></router-view>
+        <!-- <router-view> 暴露了一个 v-slot API， -->
+        <router-view v-slot="{ Component }">
+          <!-- 缓存其实是将数据缓存到了keep-alive中的data -->
+          <keep-alive :include="includeList">
+            <component :is="Component"></component>
+          </keep-alive>
+        </router-view>
       </a-layout-content>
     </a-layout>
   </a-layout>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { computed, ref, watchEffect, watch } from 'vue'
 import headers from './header.vue'
 import CAmenuItem from '@/base-ui/menuItem'
 import router from '@/router/index'
+import { useRoute } from 'vue-router'
 
 console.log(router.getRoutes())
-
 const routers = router.getRoutes()
-
+const route = useRoute()
+console.log('🤡 ~~ route', route)
 const itemConfig = routers[routers.length - 1]?.children
-
 const selectedKeys = ref<string[]>(['1'])
 const collapsed = ref(false)
 const toMenuItem = (item: any) => {
   router.push(`/main/${item.key}`)
 }
+const includeList = ref([])
+// const router = useRouter()
+watch(
+  () => route,
+  (newVal, oldVal) => {
+    console.log('🤡 ~~ newVal', newVal)
+    // 注意这里获取的是路由的name，而在我们的组件中也需要定义一个组件的name与其对应，才能实现缓存
+    if (newVal.meta.keepAlive && !includeList.value.includes(newVal.name)) {
+      includeList.value.push(newVal.name)
+    }
+  },
+  { deep: true, immediate: true }
+)
 </script>
 <style lang="scss" scoped>
 .content-style {
